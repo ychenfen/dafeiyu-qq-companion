@@ -1,0 +1,42 @@
+# NapCat(QQ 协议端) + AstrBot(机器人框架) + 本项目的插件与人设
+# 用法：cp .env.example .env && 填好 key 和 QQ 号 && docker compose up -d
+
+services:
+  napcat:
+    image: mlikiowa/napcat-docker:latest
+    container_name: deepfish-napcat
+    restart: unless-stopped
+    environment:
+      - NAPCAT_UID=${NAPCAT_UID:-1000}
+      - NAPCAT_GID=${NAPCAT_GID:-1000}
+      - MODE=astrbot
+      - TZ=Asia/Shanghai
+      - WEBUI_TOKEN=${NAPCAT_WEBUI_TOKEN}
+    ports:
+      # 只绑本机，面板通过 SSH 隧道访问，不要直接暴露公网
+      - "127.0.0.1:6099:6099"
+    volumes:
+      - ./napcat/config:/app/napcat/config
+      - ./ntqq:/app/.config/QQ
+      - ./data:/AstrBot/data
+    networks:
+      - deepfish
+
+  astrbot:
+    image: soulter/astrbot:latest
+    container_name: deepfish-astrbot
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+      - DEEPFISH_OWNER_UMO=${DEEPFISH_OWNER_UMO}
+    ports:
+      - "127.0.0.1:6185:6185"
+      - "127.0.0.1:6199:6199"
+    volumes:
+      - ./data:/AstrBot/data
+    networks:
+      - deepfish
+
+networks:
+  deepfish:
+    driver: bridge

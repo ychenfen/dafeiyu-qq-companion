@@ -1,0 +1,14 @@
+# 本地运行产物，不进仓库
+data/
+ntqq/
+napcat/
+qrcode.png
+.env
+*.db
+*.db-shm
+*.db-wal
+*.log
+__pycache__/
+*.pyc
+.DS_Store
+backups/
