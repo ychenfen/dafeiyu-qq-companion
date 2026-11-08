@@ -144,9 +144,7 @@ NapCat 容器连续两晚在 03:22 左右退出码 1 崩溃。`restart: unless-s
 
 ## 七、第三方内容
 
-`packs/` 目录下的资料来自 **Nyra（X: [@NyraanPawpaw](https://x.com/NyraanPawpaw)）**，作者原话是「二改自用请随意，二传分享务必授权+注明来源」。
-
-本仓库属于再分发，**严格来说需要先取得作者授权**。详见 [NOTICE.md](NOTICE.md)。如果作者不同意，请把 `packs/` 删掉，只保留链接。
+`packs/` 目录不是原创，整理自公开分享的第三方提示词资料，收录已获许可。所有权归原作者，本仓库只做收集与工程化整合。详见 [NOTICE.md](NOTICE.md)。
 
 ## 八、License
 
