@@ -1,6 +1,6 @@
 """Check proactive delivery outcomes without sending real QQ messages."""
 
-import importlib.util
+import sys
 import unittest
 import datetime
 import tempfile
@@ -8,14 +8,11 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
 
-from aiocqhttp.exceptions import ApiNotAvailable
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _support import load_plugin_module
 
-spec = importlib.util.spec_from_file_location(
-    "dafeiyu_proactive_test_target",
-    "/AstrBot/data/plugins/astrbot_plugin_dafeiyu/main.py",
-)
-module = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(module)
+module = load_plugin_module("dafeiyu_proactive_test_target")
+from aiocqhttp.exceptions import ApiNotAvailable
 
 
 class ProactiveTests(unittest.IsolatedAsyncioTestCase):

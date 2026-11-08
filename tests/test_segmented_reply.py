@@ -2,19 +2,23 @@
 
 import json
 import unittest
+from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
 
-from astrbot.core.message.components import Plain
-from astrbot.core.message.message_event_result import MessageEventResult, ResultContentType
-from astrbot.core.pipeline.result_decorate.stage import ResultDecorateStage
-from astrbot.core.pipeline.respond.stage import RespondStage
-from astrbot.core.platform.astrbot_message import AstrBotMessage, MessageMember
-from astrbot.core.platform.message_type import MessageType
-from astrbot.core.platform.platform_metadata import PlatformMetadata
-from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import AiocqhttpMessageEvent
+HAS_ASTRBOT_CONTAINER = Path("/AstrBot/data/cmd_config.json").exists()
+if HAS_ASTRBOT_CONTAINER:
+    from astrbot.core.message.components import Plain
+    from astrbot.core.message.message_event_result import MessageEventResult, ResultContentType
+    from astrbot.core.pipeline.result_decorate.stage import ResultDecorateStage
+    from astrbot.core.pipeline.respond.stage import RespondStage
+    from astrbot.core.platform.astrbot_message import AstrBotMessage, MessageMember
+    from astrbot.core.platform.message_type import MessageType
+    from astrbot.core.platform.platform_metadata import PlatformMetadata
+    from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import AiocqhttpMessageEvent
 
 
+@unittest.skipUnless(HAS_ASTRBOT_CONTAINER, "Requires live /AstrBot container runtime")
 class SegmentedReplyTests(unittest.IsolatedAsyncioTestCase):
     async def deliver(self, text):
         with open("/AstrBot/data/cmd_config.json", encoding="utf-8-sig") as source:

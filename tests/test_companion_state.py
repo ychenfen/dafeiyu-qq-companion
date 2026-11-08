@@ -1,13 +1,12 @@
-import importlib.util
+import sys
 import tempfile
 import unittest
 from pathlib import Path
 
-spec = importlib.util.spec_from_file_location(
-    "dafeiyu_state_test_target", "/AstrBot/data/plugins/astrbot_plugin_dafeiyu/main.py"
-)
-module = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(module)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _support import load_plugin_module
+
+module = load_plugin_module("dafeiyu_state_test_target")
 
 
 class CompanionStateTests(unittest.TestCase):
